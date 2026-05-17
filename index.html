@@ -8,28 +8,24 @@
 <style>
 :root{
   --black:#0a0a0a;
-  --black2:#0f0f0f;
-  --black3:#141414;
   --pink:#D4087A;
   --pink-lt:#FF6EC7;
   --pink-dim:#9B1FBF;
-  --pink-glow:rgba(212,8,122,0.35);
   --white:#f5f0f5;
   --gray:#888;
-  --neu-shadow:-4px -4px 10px rgba(255,255,255,0.02),4px 4px 10px rgba(0,0,0,0.8);
-  --neu-inset:inset -2px -2px 6px rgba(255,255,255,0.02),inset 2px 2px 6px rgba(0,0,0,0.8);
+  --neu:-4px -4px 10px rgba(255,255,255,0.02),4px 4px 10px rgba(0,0,0,0.8);
   --glow:0 0 18px rgba(212,8,122,0.4),0 0 40px rgba(212,8,122,0.15);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;font-weight:300;overflow-x:hidden;}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:0.5;}
-#cur{width:7px;height:7px;background:var(--pink);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:difference;}
-#cur-ring{width:28px;height:28px;border:1px solid rgba(212,8,122,0.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
 </style>
 <style>
-#splash{position:fixed;inset:0;background:#000;z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity 1s ease,visibility 1s;}
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--pink-dim),var(--pink),var(--pink-lt));width:0%;z-index:9999;transition:width 0.1s;}
+#splash{position:fixed;inset:0;background:var(--black);z-index:8000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;transition:opacity 1s ease,visibility 1s;}
 #splash.hide{opacity:0;visibility:hidden;}
+.splash-logo{mix-blend-mode:screen;height:120px;width:auto;}
 .splash-line{width:0;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);animation:expandL 1.4s 0.4s forwards;}
 .splash-tag{font-size:0.5rem;letter-spacing:0.6em;color:var(--pink-dim);text-transform:uppercase;opacity:0;animation:fadeUp 0.8s 1.2s forwards;}
 .splash-bar{width:70px;height:1px;background:rgba(212,8,122,0.15);position:relative;overflow:hidden;margin-top:1.5rem;}
@@ -40,42 +36,43 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 @keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
 @keyframes tick{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
 @keyframes ptFloat{0%{transform:translateY(100vh);opacity:0;}10%{opacity:0.4;}90%{opacity:0.15;}100%{transform:translateY(-5vh);opacity:0;}}
-.ticker{background:rgba(212,8,122,0.04);border-bottom:1px solid rgba(212,8,122,0.15);padding:0.5rem 0;overflow:hidden;white-space:nowrap;position:relative;z-index:200;}
-.ticker-inner{display:inline-block;animation:tick 28s linear infinite;font-size:0.48rem;letter-spacing:0.45em;text-transform:uppercase;color:var(--pink-dim);}
 </style>
 <style>
-nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(212,8,122,0.1);backdrop-filter:blur(18px);background:rgba(10,10,10,0.92);transition:padding 0.4s;}
-nav.shrunk{padding:0.55rem 2.5rem;}
-.nav-logo img{height:38px;width:auto;filter:drop-shadow(0 0 8px rgba(212,8,122,0.5));transition:height 0.4s;}
-nav.shrunk .nav-logo img{height:26px;}
-.nav-links{display:flex;gap:2.2rem;list-style:none;}
-.nav-links a{color:var(--gray);text-decoration:none;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;transition:color 0.3s;position:relative;padding-bottom:3px;}
+.ticker{background:rgba(212,8,122,0.04);border-bottom:1px solid rgba(212,8,122,0.15);padding:0.5rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-block;animation:tick 28s linear infinite;font-size:0.48rem;letter-spacing:0.45em;text-transform:uppercase;color:var(--pink-dim);}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:0.8rem 2rem;display:flex;align-items:center;justify-content:center;gap:2rem;border-bottom:1px solid rgba(212,8,122,0.1);backdrop-filter:blur(18px);background:rgba(10,10,10,0.92);transition:padding 0.4s;}
+nav.shrunk{padding:0.5rem 2rem;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.52rem;letter-spacing:0.3em;text-transform:uppercase;transition:color 0.3s;position:relative;padding-bottom:3px;}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--pink);transition:width 0.3s;}
 .nav-links a:hover{color:var(--pink);}
 .nav-links a:hover::after{width:100%;}
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 4rem;position:relative;overflow:hidden;background:var(--black);}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 55% at 50% 50%,rgba(212,8,122,0.06) 0%,transparent 70%);}
+@media(max-width:600px){nav{gap:1rem;}.nav-links a{font-size:0.42rem;letter-spacing:0.15em;}}
+</style>
+<style>
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 3rem;position:relative;overflow:hidden;background:var(--black);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 45%,rgba(212,8,122,0.07) 0%,transparent 70%);}
 #particles{position:absolute;inset:0;overflow:hidden;}
 .pt{position:absolute;background:var(--pink);border-radius:50%;animation:ptFloat linear infinite;opacity:0;}
-.hero-logo{margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 2.6s forwards;}
-.hero-logo img{height:150px;width:auto;filter:drop-shadow(0 0 25px rgba(212,8,122,0.6));}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);font-style:italic;color:var(--pink-lt);letter-spacing:0.1em;min-height:2em;opacity:0;animation:fadeUp 1s 2.9s forwards;margin-bottom:1rem;}
-.hero-sub{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gray);opacity:0;animation:fadeUp 1s 3.1s forwards;margin-bottom:2rem;}
+.hero-logo{margin-bottom:1rem;opacity:0;animation:fadeUp 1s 2.6s forwards;}
+.hero-logo img{height:180px;width:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 30px rgba(212,8,122,0.5));}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,3vw,1.6rem);font-style:italic;color:var(--pink-lt);letter-spacing:0.1em;min-height:2.5em;opacity:0;animation:fadeUp 1s 2.9s forwards;margin-bottom:0.8rem;}
+.hero-sub{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--gray);opacity:0;animation:fadeUp 1s 3.1s forwards;margin-bottom:2rem;min-height:1.5em;}
 .hero-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--pink),transparent);margin:0 auto 2rem;opacity:0;animation:fadeUp 1s 3.1s forwards;}
-.hero-cta{display:inline-block;padding:0.9rem 2.8rem;border:1px solid rgba(212,8,122,0.4);color:var(--pink);text-decoration:none;font-size:0.55rem;letter-spacing:0.45em;text-transform:uppercase;transition:all 0.4s;position:relative;overflow:hidden;opacity:0;animation:fadeUp 1s 3.3s forwards;box-shadow:var(--neu-shadow);border-radius:2px;}
+.hero-cta{display:inline-block;padding:0.9rem 2.8rem;border:1px solid rgba(212,8,122,0.4);color:var(--pink);text-decoration:none;font-size:0.55rem;letter-spacing:0.45em;text-transform:uppercase;transition:all 0.4s;position:relative;overflow:hidden;opacity:0;animation:fadeUp 1s 3.3s forwards;box-shadow:var(--neu);}
 .hero-cta::before{content:'';position:absolute;inset:0;background:rgba(212,8,122,0.08);transform:translateX(-101%);transition:transform 0.4s;}
 .hero-cta:hover::before{transform:translateX(0);}
 .hero-cta:hover{border-color:var(--pink);color:var(--pink-lt);box-shadow:var(--glow);}
 </style>
 <style>
-section{padding:5rem 2rem;background:var(--black);}
+section{padding:4.5rem 2rem;background:var(--black);}
 .sec-label{font-size:0.48rem;letter-spacing:0.6em;color:var(--pink-dim);text-transform:uppercase;text-align:center;margin-bottom:0.5rem;}
 .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:300;text-align:center;background:linear-gradient(135deg,var(--pink-lt) 0%,var(--pink) 40%,var(--pink-dim) 70%,var(--pink) 90%,var(--pink-lt) 100%);background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s infinite;margin-bottom:1rem;}
-.sec-text{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95rem,2vw,1.15rem);font-style:italic;color:var(--gray);line-height:1.9;text-align:center;max-width:700px;margin:0 auto 3rem;}
-.pink-divider{display:flex;align-items:center;gap:1rem;padding:0 2rem;max-width:900px;margin:0 auto 3rem;}
+.sec-text{font-family:'Cormorant Garamond',serif;font-size:clamp(0.95rem,2vw,1.15rem);font-style:italic;color:var(--gray);line-height:1.9;text-align:center;max-width:700px;margin:0 auto 2.5rem;min-height:5em;}
+.pink-divider{display:flex;align-items:center;gap:1rem;max-width:800px;margin:0 auto 2.5rem;}
 .pink-divider::before,.pink-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--pink-dim),transparent);}
-.pink-diamond{width:6px;height:6px;background:var(--pink);transform:rotate(45deg);flex-shrink:0;}
-.neu-card{background:var(--black2);border-radius:4px;box-shadow:var(--neu-shadow);border:1px solid rgba(212,8,122,0.08);transition:box-shadow 0.4s,border-color 0.4s;}
+.pink-diamond{width:5px;height:5px;background:var(--pink);transform:rotate(45deg);}
+.neu-card{background:var(--black);border-radius:4px;box-shadow:var(--neu);border:1px solid rgba(212,8,122,0.08);transition:box-shadow 0.4s,border-color 0.4s;}
 .neu-card:hover{box-shadow:var(--glow);border-color:rgba(212,8,122,0.4);}
 .reveal-left{opacity:0;transform:translateX(-60px);transition:opacity 0.75s ease,transform 0.75s ease;}
 .reveal-right{opacity:0;transform:translateX(60px);transition:opacity 0.75s ease,transform 0.75s ease;}
@@ -83,70 +80,59 @@ section{padding:5rem 2rem;background:var(--black);}
 .revealed{opacity:1!important;transform:translate(0,0)!important;}
 </style>
 <style>
-#about{background:var(--black);}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;margin:0 auto;}
-.about-img{background:var(--black3);border-radius:4px;box-shadow:var(--neu-shadow);border:1px solid rgba(212,8,122,0.08);height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:800px;margin:0 auto;}
+.about-img{border-radius:4px;height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(212,8,122,0.1);}
 .about-img::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(212,8,122,0.08) 0%,transparent 70%);}
-.about-img-icon{width:30px;height:30px;border:1px solid rgba(212,8,122,0.3);transform:rotate(45deg);position:relative;}
-.about-img-icon::after{content:'';position:absolute;inset:5px;border:1px solid rgba(212,8,122,0.15);}
-#why{background:var(--black);}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;max-width:900px;margin:0 auto;}
-.why-card{padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1rem;}
-.why-icon{width:32px;height:32px;border:1px solid var(--pink-dim);transform:rotate(45deg);position:relative;flex-shrink:0;}
-.why-icon::after{content:'';position:absolute;inset:5px;border:1px solid rgba(212,8,122,0.25);}
-.why-title{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--pink);}
+.geo{width:28px;height:28px;border:1px solid rgba(212,8,122,0.3);transform:rotate(45deg);position:relative;}
+.geo::after{content:'';position:absolute;inset:5px;border:1px solid rgba(212,8,122,0.15);}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;max-width:900px;margin:0 auto;}
+.why-card{padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0.8rem;}
+.why-title{font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--pink);}
 .why-text{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-style:italic;color:var(--gray);line-height:1.7;}
+@media(max-width:600px){.about-grid{grid-template-columns:1fr;}}
 </style>
 <style>
-#collection{background:var(--black);}
 .col-section{max-width:960px;margin:0 auto;}
-.col-sub-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;background:linear-gradient(135deg,var(--pink-lt),var(--pink),var(--pink-dim));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s infinite;margin-bottom:1.5rem;text-align:center;}
-.col-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-bottom:3rem;}
-.col-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem;}
-.col-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:3rem;}
-.p-card{border:1px solid rgba(212,8,122,0.1);padding:0;text-align:center;position:relative;transition:border-color 0.4s,transform 0.4s,box-shadow 0.4s;background:var(--black2);border-radius:4px;overflow:hidden;}
+.col-sub-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;background:linear-gradient(135deg,var(--pink-lt),var(--pink),var(--pink-dim));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s infinite;margin-bottom:1.2rem;text-align:center;}
+.col-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-bottom:2.5rem;}
+.col-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:2.5rem;}
+.col-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+.p-card{border:1px solid rgba(212,8,122,0.1);text-align:center;position:relative;transition:border-color 0.4s,transform 0.4s,box-shadow 0.4s;background:var(--black);border-radius:4px;overflow:hidden;box-shadow:var(--neu);}
 .p-card:hover{border-color:rgba(212,8,122,0.5);transform:translateY(-4px);box-shadow:var(--glow);}
-.p-img{height:160px;background:var(--black3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,8,122,0.08);}
+.p-img{height:140px;background:var(--black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:1px solid rgba(212,8,122,0.08);}
 .p-img::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(212,8,122,0.07) 0%,transparent 70%);}
-.p-img-icon{width:28px;height:28px;border:1px solid rgba(212,8,122,0.3);transform:rotate(45deg);position:relative;}
-.p-img-icon::after{content:'';position:absolute;inset:4px;border:1px solid rgba(212,8,122,0.15);}
-.p-body{padding:1.2rem;}
-.p-badge{font-size:0.4rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink-dim);border:1px solid rgba(212,8,122,0.2);padding:0.15rem 0.4rem;display:inline-block;margin-bottom:0.5rem;}
-.p-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;background:linear-gradient(135deg,var(--pink-lt),var(--pink),var(--pink-dim));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s infinite;margin-bottom:0.4rem;}
-.p-desc{font-size:0.55rem;letter-spacing:0.08em;color:var(--gray);line-height:1.8;}
+.p-body{padding:1rem;}
+.p-badge{font-size:0.4rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--pink-dim);border:1px solid rgba(212,8,122,0.2);padding:0.15rem 0.4rem;display:inline-block;margin-bottom:0.4rem;}
+.p-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;background:linear-gradient(135deg,var(--pink-lt),var(--pink),var(--pink-dim));background-size:200% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s infinite;margin-bottom:0.3rem;}
+.p-desc{font-size:0.52rem;letter-spacing:0.06em;color:var(--gray);line-height:1.7;min-height:2.5em;}
+@media(max-width:600px){.col-grid-2,.col-grid-3,.col-grid-4{grid-template-columns:1fr 1fr;}}
 </style>
 <style>
-#community{background:var(--black);text-align:center;}
-.community-card{max-width:650px;margin:0 auto;padding:3rem 2rem;border-radius:4px;}
-.community-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.3rem);font-style:italic;color:var(--gray);line-height:1.9;margin-bottom:2rem;}
-.community-cta{display:inline-block;padding:0.8rem 2.5rem;border:1px solid rgba(212,8,122,0.3);color:var(--pink);text-decoration:none;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;transition:all 0.4s;box-shadow:var(--neu-shadow);border-radius:2px;}
-.community-cta:hover{border-color:var(--pink);color:var(--pink-lt);box-shadow:var(--glow);}
-#socials{background:var(--black);text-align:center;}
-.s-grid{display:flex;justify-content:center;gap:1.5rem;margin-top:2rem;flex-wrap:wrap;}
-.s-btn{display:flex;align-items:center;gap:0.7rem;padding:0.9rem 2rem;border:1px solid rgba(212,8,122,0.15);color:var(--gray);text-decoration:none;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;transition:all 0.4s;box-shadow:var(--neu-shadow);border-radius:2px;}
-.s-btn:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow);}
-.s-btn svg{width:16px;height:16px;fill:currentColor;}
+.community-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.3rem);font-style:italic;color:var(--gray);line-height:1.9;text-align:center;max-width:650px;margin:0 auto;min-height:5em;}
+.s-grid{display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
+.s-btn{width:56px;height:56px;border-radius:50%;border:1px solid rgba(212,8,122,0.25);display:flex;align-items:center;justify-content:center;color:var(--gray);text-decoration:none;transition:all 0.4s;box-shadow:var(--neu);}
+.s-btn:hover{border-color:var(--pink);color:var(--pink);box-shadow:var(--glow);transform:translateY(-3px);}
+.s-btn svg{width:22px;height:22px;fill:currentColor;}
 footer{padding:3rem 2rem;text-align:center;border-top:1px solid rgba(212,8,122,0.1);background:var(--black);}
-footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5));margin-bottom:1rem;}
+footer img{height:55px;width:auto;mix-blend-mode:screen;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5));margin-bottom:1rem;}
 .f-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap;}
 .f-links a{color:var(--gray);text-decoration:none;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;transition:color 0.3s;}
 .f-links a:hover{color:var(--pink);}
 .f-text{font-size:0.45rem;letter-spacing:0.3em;color:rgba(212,8,122,0.3);}
-@media(max-width:600px){.nav-links{display:none;}.col-grid-2,.col-grid-3,.col-grid-4{grid-template-columns:1fr 1fr;}.about-grid{grid-template-columns:1fr;}.s-grid{flex-direction:column;align-items:center;}}
+.back-top{display:inline-flex;align-items:center;justify-content:center;margin-top:1.5rem;width:38px;height:38px;border:1px solid rgba(212,8,122,0.25);border-radius:50%;color:var(--pink);text-decoration:none;font-size:1rem;transition:all 0.3s;box-shadow:var(--neu);}
+.back-top:hover{box-shadow:var(--glow);border-color:var(--pink);}
 </style>
 </head>
 <body>
-<div id="cur"></div>
-<div id="cur-ring"></div>
+<div id="progress-bar"></div>
 <div id="splash">
-  <img src="logo.png" alt="EKANI" style="height:100px;filter:drop-shadow(0 0 20px rgba(212,8,122,0.7));">
+  <img class="splash-logo" src="logo.png" alt="EKANI">
   <div class="splash-line"></div>
   <div class="splash-tag">Where Elegance Meets Everyday</div>
   <div class="splash-bar"></div>
 </div>
 <div class="ticker"><span class="ticker-inner">✦ New Collection Dropping Soon &nbsp;&nbsp;&nbsp; ✦ Handcrafted Premium Lace &nbsp;&nbsp;&nbsp; ✦ Limited Edition Pieces &nbsp;&nbsp;&nbsp; ✦ DM To Order &nbsp;&nbsp;&nbsp; ✦ Where Elegance Meets Everyday &nbsp;&nbsp;&nbsp; ✦ Luxury Essentials For The Modern Woman &nbsp;&nbsp;&nbsp;</span></div>
 <nav id="navbar">
-  <a href="#" class="nav-logo"><img src="logo.png" alt="EKANI"></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#why">Why Us</a></li>
@@ -168,10 +154,10 @@ footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5
   <p class="sec-label reveal-up">Our Story</p>
   <h2 class="sec-title reveal-up">About EKANI</h2>
   <div class="pink-divider reveal-up"><div class="pink-diamond"></div></div>
-  <p class="sec-text reveal-up">"At EKANI, we believe everyday essentials should feel extraordinary. Each pad pouch is handcrafted with the finest white lace, designed to complement your unique style. More than just a practical accessory, our pieces celebrate femininity, elegance, and attention to detail. Luxurious, durable, and thoughtfully designed, EKANI transforms daily routines into moments of self-care and grace."</p>
+  <p class="sec-text reveal-up" id="about-text"></p>
   <div class="about-grid reveal-up">
-    <div class="about-img neu-card"><div class="about-img-icon"></div></div>
-    <div class="about-img neu-card"><div class="about-img-icon"></div></div>
+    <div class="about-img neu-card"><div class="geo"></div></div>
+    <div class="about-img neu-card"><div class="geo"></div></div>
   </div>
 </section>
 <section id="why">
@@ -180,10 +166,10 @@ footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5
   <div class="pink-divider reveal-up"><div class="pink-diamond"></div></div>
   <p class="sec-text reveal-up" id="why-text"></p>
   <div class="why-grid">
-    <div class="why-card neu-card reveal-left"><div class="why-icon"></div><div class="why-title">Handcrafted</div><div class="why-text">Every piece made with precision and care.</div></div>
-    <div class="why-card neu-card reveal-up"><div class="why-icon"></div><div class="why-title">Premium Lace</div><div class="why-text">Finest materials for ultimate luxury.</div></div>
-    <div class="why-card neu-card reveal-up"><div class="why-icon"></div><div class="why-title">Self-Care</div><div class="why-text">Designed to elevate your everyday routine.</div></div>
-    <div class="why-card neu-card reveal-right"><div class="why-icon"></div><div class="why-title">Made For You</div><div class="why-text">Celebrating femininity in every stitch.</div></div>
+    <div class="why-card neu-card reveal-left"><div class="geo"></div><div class="why-title">Handcrafted</div><div class="why-text" id="wc1"></div></div>
+    <div class="why-card neu-card reveal-up"><div class="geo"></div><div class="why-title">Premium Lace</div><div class="why-text" id="wc2"></div></div>
+    <div class="why-card neu-card reveal-up"><div class="geo"></div><div class="why-title">Self-Care</div><div class="why-text" id="wc3"></div></div>
+    <div class="why-card neu-card reveal-right"><div class="geo"></div><div class="why-title">Made For You</div><div class="why-text" id="wc4"></div></div>
   </div>
 </section>
 <section id="collection">
@@ -193,21 +179,21 @@ footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5
   <div class="col-section">
     <p class="col-sub-title reveal-up">EKANI Signature Pouch</p>
     <div class="col-grid-2 reveal-up">
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Flagship</span><div class="p-name">Signature Pouch</div><p class="p-desc">Handcrafted white lace pad pouch. Pure luxury meets everyday confidence.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Bestseller</span><div class="p-name">Signature Pouch II</div><p class="p-desc">A refined take on our flagship. Elegant, durable, and distinctly EKANI.</p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Flagship</span><div class="p-name">Signature Pouch</div><p class="p-desc" data-type="Handcrafted white lace pad pouch. Pure luxury meets everyday confidence."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Bestseller</span><div class="p-name">Signature Pouch II</div><p class="p-desc" data-type="A refined take on our flagship. Elegant, durable, and distinctly EKANI."></p></div></div>
     </div>
     <p class="col-sub-title reveal-up">Luxe Lace Collection</p>
     <div class="col-grid-3 reveal-up">
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Ivory Dream</div><p class="p-desc">Delicate ivory lace with a satin lining.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Pearl Rose</div><p class="p-desc">Soft rose tones meets premium white lace.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Midnight White</div><p class="p-desc">Crisp white lace against a dark elegant base.</p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Ivory Dream</div><p class="p-desc" data-type="Delicate ivory lace with a satin lining."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Pearl Rose</div><p class="p-desc" data-type="Soft rose tones meets premium white lace."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Luxe</span><div class="p-name">Midnight White</div><p class="p-desc" data-type="Crisp white lace against a dark elegant base."></p></div></div>
     </div>
     <p class="col-sub-title reveal-up">Custom Design Series</p>
     <div class="col-grid-4 reveal-up">
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Monogram</div><p class="p-desc">Your initials, your luxury.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Floral Edit</div><p class="p-desc">Hand-stitched floral lace design.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Gem Series</div><p class="p-desc">Embellished with premium crystal gems.</p></div></div>
-      <div class="p-card"><div class="p-img"><div class="p-img-icon"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Bespoke</div><p class="p-desc">Fully custom — designed just for you.</p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Monogram</div><p class="p-desc" data-type="Your initials, your luxury."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Floral Edit</div><p class="p-desc" data-type="Hand-stitched floral lace design."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Gem Series</div><p class="p-desc" data-type="Embellished with premium crystal gems."></p></div></div>
+      <div class="p-card"><div class="p-img"><div class="geo"></div></div><div class="p-body"><span class="p-badge">Custom</span><div class="p-name">Bespoke</div><p class="p-desc" data-type="Fully custom — designed just for you."></p></div></div>
     </div>
   </div>
 </section>
@@ -215,19 +201,16 @@ footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5
   <p class="sec-label reveal-up">Be Part Of Us</p>
   <h2 class="sec-title reveal-up">Join The EKANI Community</h2>
   <div class="pink-divider reveal-up"><div class="pink-diamond"></div></div>
-  <div class="community-card neu-card reveal-up">
-    <p class="community-text">"Make EKANI part of your luxurious lifestyle. Share your moments, connect with like-minded women, and embrace elegance every day."</p>
-    <a href="#socials" class="community-cta">Join Now</a>
-  </div>
+  <p class="community-text reveal-up" id="community-text"></p>
 </section>
 <section id="socials">
   <p class="sec-label reveal-up">Connect</p>
   <h2 class="sec-title reveal-up">Find Us Here</h2>
   <div class="pink-divider reveal-up"><div class="pink-diamond"></div></div>
   <div class="s-grid">
-    <a href="https://wa.me/1234567890" class="s-btn reveal-left" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</a>
-    <a href="https://instagram.com/ekani" class="s-btn reveal-up" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>Instagram</a>
-    <a href="https://tiktok.com/@ekani" class="s-btn reveal-right" target="_blank"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>TikTok</a>
+    <a href="https://wa.me/1234567890" class="s-btn reveal-left" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+    <a href="https://instagram.com/ekani" class="s-btn reveal-up" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+    <a href="https://tiktok.com/@ekani" class="s-btn reveal-right" target="_blank"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg></a>
   </div>
 </section>
 <footer>
@@ -239,23 +222,41 @@ footer img{height:55px;width:auto;filter:drop-shadow(0 0 10px rgba(212,8,122,0.5
     <a href="#community">Community</a>
   </div>
   <p class="f-text">© 2026 EKANI. All rights reserved.</p>
+  <a href="#" class="back-top">↑</a>
 </footer>
 <script>
 window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('splash').classList.add('hide'),2500);});
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx-3.5+'px';cur.style.top=my-3.5+'px';});
-(function a(){rx+=(mx-rx)*0.11;ry+=(my-ry)*0.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('navbar').classList.toggle('shrunk',scrollY>60);
+});
 const pc=document.getElementById('particles');
 for(let i=0;i<20;i++){const p=document.createElement('div');p.className='pt';const s=Math.random()*2+0.5;p.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*12}s`;pc.appendChild(p);}
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('shrunk',scrollY>60);});
-function typeWriter(el,text,speed,delay){el.textContent='';setTimeout(()=>{let i=0;const iv=setInterval(()=>{if(i<text.length)el.textContent+=text[i++];else clearInterval(iv);},speed||38);},delay||0);}
-setTimeout(()=>typeWriter(document.getElementById('hero-tag'),'Where Elegance Meets Everyday.',42),3100);
-setTimeout(()=>typeWriter(document.getElementById('hero-sub'),'Ready to experience EKANI?',38),4300);
-setTimeout(()=>typeWriter(document.getElementById('why-text'),'You deserve to feel beautiful, confident, and empowered — even in your most private moments. EKANI is more than a pad pouch; it is a statement of luxury, confidence, and self-worth. Every stitch reflects our commitment to quality, comfort, and personal expression.',30),500);
-const els=document.querySelectorAll('.reveal-left,.reveal-right,.reveal-up');
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');}else{e.target.classList.remove('revealed');}});},{threshold:0.12});
-els.forEach(r=>obs.observe(r));
+function tw(el,text,speed,delay){if(!el)return;el.textContent='';setTimeout(()=>{let i=0;const iv=setInterval(()=>{if(i<text.length)el.textContent+=text[i++];else clearInterval(iv);},speed||38);},delay||0);}
+setTimeout(()=>tw(document.getElementById('hero-tag'),'Where Elegance Meets Everyday.',42),3100);
+setTimeout(()=>tw(document.getElementById('hero-sub'),'Ready to experience EKANI?',38),4300);
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('revealed');
+      if(e.target.id==='about-text')tw(e.target,'At EKANI, we believe everyday essentials should feel extraordinary. Each pad pouch is handcrafted with the finest white lace, designed to complement your unique style. More than just a practical accessory, our pieces celebrate femininity, elegance, and attention to detail.',28,200);
+      if(e.target.id==='why-text')tw(e.target,'You deserve to feel beautiful, confident, and empowered — even in your most private moments. EKANI is more than a pad pouch; it is a statement of luxury, confidence, and self-worth. Every stitch reflects our commitment to quality, comfort, and personal expression.',28,200);
+      if(e.target.id==='community-text')tw(e.target,'Make EKANI part of your luxurious lifestyle. Share your moments, connect with like-minded women, and embrace elegance every day.',28,200);
+      if(e.target.id==='wc1')tw(e.target,'Every piece made with precision and care.',30,200);
+      if(e.target.id==='wc2')tw(e.target,'Finest materials for ultimate luxury.',30,200);
+      if(e.target.id==='wc3')tw(e.target,'Designed to elevate your everyday routine.',30,200);
+      if(e.target.id==='wc4')tw(e.target,'Celebrating femininity in every stitch.',30,200);
+      e.target.querySelectorAll('[data-type]').forEach(t=>{if(!t.dataset.typed){t.dataset.typed='1';tw(t,t.dataset.type,30,300);}});
+    } else {
+      e.target.classList.remove('revealed');
+      if(e.target.id==='about-text'||e.target.id==='why-text'||e.target.id==='community-text')e.target.textContent='';
+      e.target.querySelectorAll('[data-type]').forEach(t=>{t.textContent='';delete t.dataset.typed;});
+    }
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal-left,.reveal-right,.reveal-up').forEach(r=>obs.observe(r));
 </script>
 </body>
 </html>
