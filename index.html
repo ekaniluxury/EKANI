@@ -23,35 +23,39 @@ html{scroll-behavior:smooth;}
 body{background:var(--ivory);color:var(--text);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease,transform 0.8s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
+.section-eyebrow{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--champagne);margin-bottom:1rem;display:block;}
+.section-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.5rem);line-height:1.1;color:var(--charcoal);margin-bottom:1.5rem;}
+.section-title em{font-style:italic;color:var(--gold);}
+.divider{display:flex;align-items:center;gap:1rem;padding:0 3rem;}
+.divider::before,.divider::after{content:'';flex:1;height:0.5px;background:linear-gradient(90deg,transparent,rgba(201,169,110,0.4),transparent);}
+.divider-diamond{width:5px;height:5px;background:var(--champagne);transform:rotate(45deg);}
 </style>
 <style>
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(250,247,242,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(201,169,110,0.2);transition:padding 0.4s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(250,247,242,0.96);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(201,169,110,0.2);transition:padding 0.4s;}
 .nav-links{display:flex;gap:2.5rem;list-style:none;}
 .nav-links a{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;color:var(--mink);transition:color 0.3s;}
 .nav-links a:hover{color:var(--gold);}
 .nav-brand{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22px;letter-spacing:0.25em;color:var(--charcoal);text-decoration:none;text-transform:uppercase;}
-.nav-cta{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:0.5px solid var(--champagne);padding-bottom:1px;transition:color 0.3s;}
-.nav-cta:hover{color:var(--charcoal);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
-.hamburger span{width:22px;height:1px;background:var(--charcoal);transition:all 0.3s;}
-.mobile-menu{display:none;position:fixed;inset:0;background:var(--ivory);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+.nav-cta{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:0.5px solid var(--champagne);padding-bottom:1px;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+.hamburger span{width:22px;height:1px;background:var(--charcoal);display:block;transition:all 0.3s;}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--ivory);z-index:199;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
 .mobile-menu.open{display:flex;}
-.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;letter-spacing:0.15em;text-decoration:none;color:var(--charcoal);transition:color 0.3s;}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;letter-spacing:0.15em;text-decoration:none;color:var(--charcoal);}
 .mobile-menu a:hover{color:var(--gold);}
 .mobile-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.5rem;cursor:pointer;color:var(--mink);background:none;border:none;}
+.ticker{margin-top:63px;background:var(--charcoal);color:var(--champagne);padding:0.6rem 0;overflow:hidden;white-space:nowrap;}
+.ticker-inner{display:inline-flex;animation:ticker 30s linear infinite;}
+.ticker span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:0 2rem;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 </style>
 <style>
-.ticker{margin-top:65px;background:var(--charcoal);color:var(--champagne);padding:0.65rem 0;overflow:hidden;white-space:nowrap;}
-.ticker-inner{display:inline-flex;animation:ticker 28s linear infinite;}
-.ticker span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;padding:0 2.5rem;}
-@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:92vh;}
 .hero-image{position:relative;overflow:hidden;background:var(--ivory);display:flex;align-items:center;justify-content:center;}
-.hero-image-bg{position:absolute;inset:0;background:var(--ivory);}
-.hero-logo-img{position:relative;z-index:1;width:88%;max-width:420px;height:auto;}
-.hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 3.5rem;}
+.hero-logo-img{width:88%;max-width:440px;height:auto;}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 3rem;}
 .hero-eyebrow{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--champagne);margin-bottom:1.5rem;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.5rem,4.5vw,4.5rem);line-height:1.05;color:var(--charcoal);margin-bottom:1.5rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.5rem,4.5vw,4.8rem);line-height:1.05;color:var(--charcoal);margin-bottom:1.5rem;}
 .hero-title em{font-style:italic;color:var(--gold);}
 .hero-sub{font-size:14px;line-height:1.8;color:var(--mink);max-width:340px;margin-bottom:3rem;}
 .hero-actions{display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
@@ -61,22 +65,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-ghost:hover{color:var(--gold);}
 </style>
 <style>
-.section-eyebrow{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--champagne);margin-bottom:1rem;display:block;}
-.section-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.5rem);line-height:1.1;color:var(--charcoal);margin-bottom:1.5rem;}
-.section-title em{font-style:italic;color:var(--gold);}
-.divider{display:flex;align-items:center;gap:1rem;padding:0 3rem;margin:0 auto;}
-.divider::before,.divider::after{content:'';flex:1;height:0.5px;background:linear-gradient(90deg,transparent,rgba(201,169,110,0.4),transparent);}
-.divider-diamond{width:5px;height:5px;background:var(--champagne);transform:rotate(45deg);}
 .about{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;}
-.about-image{position:relative;overflow:hidden;}
-.about-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
 .about-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;}
 .about-body{font-size:15px;line-height:1.9;color:var(--mink);max-width:420px;margin-bottom:2.5rem;}
 .about-stats{display:flex;gap:3rem;}
 .stat-number{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--charcoal);line-height:1;}
 .stat-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-top:0.4rem;}
-</style>
-<style>
+.about-visual{background:var(--cream);display:flex;align-items:center;justify-content:center;padding:4rem;}
+.about-visual-inner{text-align:center;}
+.about-quote{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;font-weight:300;color:var(--mink);line-height:1.6;margin-bottom:1.5rem;}
+.about-diamond{width:8px;height:8px;background:var(--champagne);transform:rotate(45deg);margin:0 auto;}
 .why{padding:6rem 3rem;background:var(--ivory-dark);}
 .why-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:3rem;}
 .why-item{padding:2.5rem 2rem;border-right:0.5px solid rgba(201,169,110,0.2);}
@@ -84,46 +82,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .why-number{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:rgba(201,169,110,0.3);line-height:1;margin-bottom:1rem;}
 .why-title{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--charcoal);margin-bottom:0.75rem;}
 .why-body{font-size:13px;line-height:1.8;color:var(--text-muted);}
-.collection{padding:6rem 3rem;background:var(--ivory);}
-.collection-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem;}
-.tabs{display:flex;gap:0;flex-wrap:wrap;border:none;}
-.tab{padding:0.65rem 1.5rem;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;background:transparent;border:0.5px solid rgba(201,169,110,0.3);color:var(--text-muted);cursor:pointer;transition:all 0.3s;}
-.tab.active{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal);}
-.tab:hover:not(.active){background:rgba(201,169,110,0.08);}
 </style>
 <style>
+.collection{padding:6rem 3rem;background:var(--ivory);}
+.collection-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;flex-wrap:wrap;gap:1.5rem;}
+.tabs{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.tab{padding:0.5rem 1.2rem;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;background:transparent;border:0.5px solid rgba(201,169,110,0.3);color:var(--text-muted);cursor:pointer;transition:all 0.3s;border-radius:0;}
+.tab.active{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal);}
+.tab:hover:not(.active){background:rgba(201,169,110,0.08);}
 .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.product-card{position:relative;overflow:hidden;cursor:pointer;background:var(--ivory-dark);aspect-ratio:3/4;}
+.product-card{position:relative;overflow:hidden;cursor:pointer;background:var(--ivory-dark);border-radius:2px;}
 .product-card.hidden{display:none;}
-.product-card-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 0.6s ease;}
-.product-card:hover .product-card-bg{transform:scale(1.05);}
-.product-card-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(42,36,32,0.75) 0%,rgba(42,36,32,0.1) 50%,transparent 100%);}
-.product-badge{position:absolute;top:1rem;left:1rem;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);border:0.5px solid rgba(201,169,110,0.5);padding:0.3rem 0.75rem;z-index:2;background:rgba(42,36,32,0.4);backdrop-filter:blur(4px);}
-.product-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem;z-index:2;transform:translateY(10px);transition:transform 0.4s ease;opacity:0;}
-.product-card:hover .product-overlay{transform:translateY(0);opacity:1;}
-.product-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--ivory);margin-bottom:0.2rem;}
-.product-sub{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,247,242,0.6);margin-bottom:0.6rem;}
-.product-price-tag{font-size:13px;color:var(--champagne);margin-bottom:0.8rem;}
-.product-order{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ivory);border-bottom:0.5px solid rgba(250,247,242,0.4);padding-bottom:2px;cursor:pointer;display:inline-block;}
-.p-bg-1{background-image:url("p1.jpeg");}
-.p-bg-2{background-image:url("p2.jpeg");}
-.p-bg-3{background-image:url("p3.jpeg");}
-.p-bg-4{background-image:url("p4.jpeg");}
-.p-bg-5{background-image:url("p5.jpeg");}
-.p-bg-6{background-image:url("p6.jpeg");}
-.p-bg-7{background-image:url("p7.jpeg");}
-.p-bg-8{background-image:url("p8.jpeg");}
-.p-bg-9{background-image:url("p9.jpeg");}
-.p-bg-10{background-image:url("p10.jpeg");}
-.p-bg-11{background-image:url("p11.jpeg");}
-.p-bg-12{background-image:url("p12.jpeg");}
+.product-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;transition:transform 0.5s ease;}
+.product-card:hover .product-img{transform:scale(1.04);}
+.product-info{padding:1rem;}
+.product-badge-sm{font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);margin-bottom:0.4rem;display:block;}
+.product-name-sm{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:var(--charcoal);margin-bottom:0.3rem;line-height:1.2;}
+.product-price-sm{font-size:12px;color:var(--gold);font-weight:400;margin-bottom:0.5rem;}
+.product-cta{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mink);border-bottom:0.5px solid rgba(107,90,78,0.3);padding-bottom:1px;display:inline-block;transition:color 0.3s;}
+.product-card:hover .product-cta{color:var(--gold);border-color:var(--gold);}
 </style>
 <style>
 .editorial{display:grid;grid-template-columns:1fr 1fr;min-height:55vh;}
 .editorial-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;background:var(--cream);}
 .editorial-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.3rem);font-weight:300;font-style:italic;line-height:1.4;color:var(--charcoal);margin-bottom:2rem;}
 .editorial-attr{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--text-muted);}
-.editorial-image{position:relative;background:var(--ivory);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.editorial-image{background:var(--ivory);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .editorial-image img{width:80%;height:auto;}
 .community{padding:6rem 3rem;background:var(--charcoal);text-align:center;}
 .community .section-eyebrow{color:var(--champagne);}
@@ -149,58 +133,58 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
 .footer-links a{font-size:13px;color:rgba(250,247,242,0.5);text-decoration:none;transition:color 0.3s;}
 .footer-links a:hover{color:var(--ivory);}
 .footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-.footer-copy{font-size:11px;color:rgba(250,247,242,0.25);letter-spacing:0.05em;}
+.footer-copy{font-size:11px;color:rgba(250,247,242,0.25);}
 .back-top{width:36px;height:36px;border:0.5px solid rgba(201,169,110,0.3);display:flex;align-items:center;justify-content:center;color:var(--champagne);text-decoration:none;font-size:0.9rem;transition:all 0.3s;}
-.back-top:hover{border-color:var(--champagne);background:rgba(201,169,110,0.1);}
-</style>
-<style>
+.back-top:hover{border-color:var(--champagne);}
 .modal-overlay{position:fixed;inset:0;background:rgba(42,36,32,0.6);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all 0.3s;}
 .modal-overlay.open{opacity:1;visibility:visible;}
-.modal{background:var(--ivory);padding:3rem;max-width:440px;width:90%;position:relative;max-height:90vh;overflow-y:auto;}
-.modal-close{position:absolute;top:1.25rem;right:1.25rem;background:none;border:none;font-size:1rem;color:var(--mink);cursor:pointer;}
-.modal-badge{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);border:0.5px solid var(--champagne);display:inline-block;padding:0.25rem 0.75rem;margin-bottom:1rem;}
-.modal-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--charcoal);margin-bottom:0.5rem;}
-.modal-sub{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;}
-.modal-price{font-size:1.1rem;color:var(--gold);margin-bottom:1.5rem;}
-.modal-desc{font-size:13px;line-height:1.8;color:var(--mink);margin-bottom:2rem;}
-.modal-order{display:inline-block;background:var(--charcoal);color:var(--ivory);padding:0.9rem 2rem;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:background 0.3s;}
+.modal{background:var(--ivory);padding:2.5rem;max-width:420px;width:92%;position:relative;max-height:88vh;overflow-y:auto;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.1rem;color:var(--mink);cursor:pointer;}
+.modal-badge{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);border:0.5px solid var(--champagne);display:inline-block;padding:0.2rem 0.6rem;margin-bottom:0.8rem;}
+.modal-name{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--charcoal);margin-bottom:0.4rem;}
+.modal-sub{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.8rem;}
+.modal-price{font-size:1.1rem;color:var(--gold);margin-bottom:1.2rem;font-weight:400;}
+.modal-desc{font-size:13px;line-height:1.8;color:var(--mink);margin-bottom:1.8rem;}
+.modal-order{display:inline-block;background:var(--charcoal);color:var(--ivory);padding:0.85rem 2rem;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:background 0.3s;}
 .modal-order:hover{background:var(--gold);}
+</style>
+<style>
 @media(max-width:768px){
   nav{padding:1rem 1.5rem;}
   .nav-links{display:none;}
   .hamburger{display:flex;}
+  .ticker{margin-top:57px;}
   .hero{grid-template-columns:1fr;min-height:auto;}
-  .hero-image{min-height:60vw;max-height:340px;}
-  .hero-logo-img{width:75%;max-width:280px;}
+  .hero-image{min-height:55vw;max-height:320px;}
+  .hero-logo-img{width:80%;max-width:300px;}
   .hero-text{padding:2.5rem 1.5rem;}
+  .hero-sub{max-width:100%;}
   .hero-actions{flex-direction:column;align-items:flex-start;gap:1rem;}
   .about{grid-template-columns:1fr;}
-  .about-image{min-height:320px;position:relative;overflow:hidden;}
   .about-text{padding:2.5rem 1.5rem;}
+  .about-visual{padding:2.5rem 1.5rem;}
   .why{padding:4rem 1.5rem;}
   .why-grid{grid-template-columns:1fr 1fr;}
   .why-item{border-right:none;border-bottom:0.5px solid rgba(201,169,110,0.2);padding:1.5rem 1rem;}
   .why-item:nth-child(odd){border-right:0.5px solid rgba(201,169,110,0.2);}
-  .collection{padding:4rem 1.25rem;}
+  .collection{padding:3rem 1.25rem;}
   .collection-header{flex-direction:column;align-items:flex-start;}
-  .product-grid{grid-template-columns:1fr;gap:1rem;}
+  .product-grid{grid-template-columns:1fr 1fr;gap:0.75rem;}
   .editorial{grid-template-columns:1fr;}
   .editorial-text{padding:3rem 1.5rem;}
-  .editorial-image{min-height:260px;}
+  .editorial-image{min-height:240px;}
   .community{padding:4rem 1.5rem;}
   .community-form{flex-direction:column;border:none;gap:0.75rem;}
   .community-input{border:0.5px solid var(--champagne);padding:0.9rem 1.25rem;}
   footer{padding:3rem 1.5rem 2rem;}
   .footer-top{grid-template-columns:1fr 1fr;gap:2rem;}
   .divider{padding:0 1.5rem;}
-  .ticker{margin-top:58px;}
 }
 @media(max-width:480px){
   .product-grid{grid-template-columns:1fr 1fr;}
   .why-grid{grid-template-columns:1fr;}
   .why-item{border-right:none!important;}
   .footer-top{grid-template-columns:1fr;}
-  .hero-title{font-size:2.2rem;}
 }
 </style>
 </head>
@@ -210,7 +194,7 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
   <a href="#about" onclick="toggleMenu()">Story</a>
   <a href="#collection" onclick="toggleMenu()">Collection</a>
   <a href="#community" onclick="toggleMenu()">Community</a>
-  <a href="https://wa.me/254103572223" target="_blank">Order Now</a>
+  <a href="https://wa.me/254103572223" target="_blank" onclick="toggleMenu()">Order Now</a>
 </div>
 <nav id="navbar">
   <ul class="nav-links">
@@ -221,28 +205,25 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
   <a href="#" class="nav-brand">Ekani</a>
   <div style="display:flex;align-items:center;gap:1.5rem;">
     <a href="https://wa.me/254103572223" class="nav-cta" target="_blank">DM to Order ↗</a>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
   </div>
 </nav>
 <div class="ticker">
   <span class="ticker-inner">
-    <span>New Collection Dropping Soon</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Premium Handcrafted Pieces</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Limited Edition</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>DM To Order</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Where Elegance Meets Everyday</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>New Collection Dropping Soon</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Premium Handcrafted Pieces</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Limited Edition</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>DM To Order</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
-    <span>Where Elegance Meets Everyday</span><span style="opacity:0.4;padding:0 1rem;">✦</span>
+    <span>New Collection Dropping Soon</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Premium Handcrafted Pieces</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Limited Edition</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>DM To Order</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Where Elegance Meets Everyday</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>New Collection Dropping Soon</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Premium Handcrafted Pieces</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Limited Edition</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>DM To Order</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
+    <span>Where Elegance Meets Everyday</span><span style="opacity:0.35;padding:0 1rem;">✦</span>
   </span>
 </div>
 <section class="hero">
   <div class="hero-image">
-    <div class="hero-image-bg"></div>
     <img class="hero-logo-img" src="logo-wide.png" alt="EKANI">
   </div>
   <div class="hero-text">
@@ -257,9 +238,6 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
 </section>
 <div class="divider"><div class="divider-diamond"></div></div>
 <section class="about" id="about">
-  <div class="about-image">
-    <img src="p6.jpeg" alt="EKANI Pouch">
-  </div>
   <div class="about-text">
     <p class="section-eyebrow reveal">Our Story</p>
     <h2 class="section-title reveal">Crafted with<br><em>intention</em>,<br>worn with grace</h2>
@@ -267,6 +245,12 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
     <div class="about-stats reveal">
       <div><div class="stat-number">100%</div><div class="stat-label">Handcrafted</div></div>
       <div><div class="stat-number">Est.</div><div class="stat-label">2026 · Nairobi</div></div>
+    </div>
+  </div>
+  <div class="about-visual">
+    <div class="about-visual-inner reveal">
+      <p class="about-quote">"Every woman deserves to feel luxurious — even in her most private moments."</p>
+      <div class="about-diamond"></div>
     </div>
   </div>
 </section>
@@ -295,23 +279,54 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
     </div>
   </div>
   <div class="product-grid">
-    <div class="product-card" data-cat="envelope" data-name="La Dentelle Envelope" data-sub="Artisan Fabric · Envelope" data-badge="Handmade" data-price="KSh 650" data-desc="Handmade muslin sanitary pouch with lace scallop trim, floral prints and ribbon bow closure. Flat-fold design."><div class="product-card-bg p-bg-1"></div><div class="product-badge">Handmade</div><div class="product-overlay"><div class="product-name">La Dentelle Envelope</div><div class="product-sub">Artisan Fabric · Envelope</div><div class="product-price-tag">KSh 650</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="quilted" data-name="Bonne Grâce Bow Pouch" data-sub="Quilted Flap · Premium" data-badge="Premium" data-price="KSh 950" data-desc="Cream quilted snap-flap pouch with embroidered bow motif. Available in pink and black ribbon prints."><div class="product-card-bg p-bg-2"></div><div class="product-badge">Premium</div><div class="product-overlay"><div class="product-name">Bonne Grâce Bow Pouch</div><div class="product-sub">Quilted Flap · Premium</div><div class="product-price-tag">KSh 950</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="crochet" data-name="Maison Tissée Crossbody" data-sub="Crochet · Artisan" data-badge="Crochet" data-price="KSh 2,800" data-desc="Handwoven rope-cord crossbody bag with silver hardware. Neutral cream and slate tones."><div class="product-card-bg p-bg-3"></div><div class="product-badge">Crochet</div><div class="product-overlay"><div class="product-name">Maison Tissée Crossbody</div><div class="product-sub">Crochet · Artisan</div><div class="product-price-tag">KSh 2,800</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="fold" data-name="Maison Fleurie Folio" data-sub="Roll-fold · Handmade" data-badge="Handmade" data-price="KSh 850" data-desc="Wide-format roll-open sanitary organiser with lace trim flap and snap bow accent. Holds full pad stacks."><div class="product-card-bg p-bg-4"></div><div class="product-badge">Handmade</div><div class="product-overlay"><div class="product-name">Maison Fleurie Folio</div><div class="product-sub">Roll-fold · Handmade</div><div class="product-price-tag">KSh 850</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="envelope" data-name="La Fleur Bleu Sachet" data-sub="Fabric · Envelope" data-badge="Fabric" data-price="KSh 600" data-desc="Blue ditsy-floral cotton envelope pouch with loop tab and button closure. Lightweight, stackable design."><div class="product-card-bg p-bg-5"></div><div class="product-badge">Fabric</div><div class="product-overlay"><div class="product-name">La Fleur Bleu Sachet</div><div class="product-sub">Fabric · Envelope</div><div class="product-price-tag">KSh 600</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="crochet" data-name="Ivoire Crochet Trousse" data-sub="Crochet · Artisan" data-badge="Crochet" data-price="KSh 1,400" data-desc="Chunky ivory crochet zip pouch with floral cotton interior lining. Artisan-finish, tactile texture."><div class="product-card-bg p-bg-6"></div><div class="product-badge">Crochet</div><div class="product-overlay"><div class="product-name">Ivoire Crochet Trousse</div><div class="product-sub">Crochet · Artisan</div><div class="product-price-tag">KSh 1,400</div><span class="product-order">View Details →</span></div></div>
-  </div>
-</section>
-<div class="divider"><div class="divider-diamond"></div></div>
-<section class="collection" id="collection2" style="padding-top:0;">
-  <div class="product-grid">
-    <div class="product-card" data-cat="zip" data-name="Nylon Luxe Cube" data-sub="Structured Zip · Nylon" data-badge="Nylon" data-price="KSh 700" data-desc="Square zip pouch in printed nylon with bear and flamingo motifs. Structured base, zipper top, fits 6-8 pads."><div class="product-card-bg p-bg-7"></div><div class="product-badge">Nylon</div><div class="product-overlay"><div class="product-name">Nylon Luxe Cube</div><div class="product-sub">Structured Zip · Nylon</div><div class="product-price-tag">KSh 700</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="zip" data-name="Velours Cube Corduroy" data-sub="Structured Zip · Fabric" data-badge="Fabric" data-price="KSh 800" data-desc="Waffle-corduroy mini cube zip bag in pastel prints — dots, florals, strawberries. Structured boxy form."><div class="product-card-bg p-bg-8"></div><div class="product-badge">Fabric</div><div class="product-overlay"><div class="product-name">Velours Cube Corduroy</div><div class="product-sub">Structured Zip · Fabric</div><div class="product-price-tag">KSh 800</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="envelope" data-name="Petal Snap Wallet" data-sub="Fabric · Snap Closure" data-badge="Handmade" data-price="KSh 750" data-desc="Structured fabric wallet-style pouch with snap closure and natural linen inner lining. Floral cotton exterior."><div class="product-card-bg p-bg-9"></div><div class="product-badge">Handmade</div><div class="product-overlay"><div class="product-name">Petal Snap Wallet</div><div class="product-sub">Fabric · Snap Closure</div><div class="product-price-tag">KSh 750</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="fold" data-name="Rivière Stretch Folio" data-sub="Roll-fold · Premium" data-badge="Premium" data-price="KSh 900" data-desc="Book-style quilted cotton holder with elastic band closure. Opens flat to reveal dual pockets and red lining."><div class="product-card-bg p-bg-10"></div><div class="product-badge">Premium</div><div class="product-overlay"><div class="product-name">Rivière Stretch Folio</div><div class="product-sub">Roll-fold · Premium</div><div class="product-price-tag">KSh 900</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="fold" data-name="Maison Fleurie Folio II" data-sub="Roll-fold · Handmade" data-badge="Handmade" data-price="KSh 850" data-desc="Wide-format floral roll-open organiser with lace trim. Soft and lightweight with full pad capacity."><div class="product-card-bg p-bg-11"></div><div class="product-badge">Handmade</div><div class="product-overlay"><div class="product-name">Maison Fleurie Folio II</div><div class="product-sub">Roll-fold · Handmade</div><div class="product-price-tag">KSh 850</div><span class="product-order">View Details →</span></div></div>
-    <div class="product-card" data-cat="quilted" data-name="Corduroy Nœud Wristlet" data-sub="Quilted Flap · Premium" data-badge="Premium" data-price="KSh 1,050" data-desc="Ribbed corduroy wristlet pouch with allover bow print and snap closure. Available in 6 colorways."><div class="product-card-bg p-bg-12"></div><div class="product-badge">Premium</div><div class="product-overlay"><div class="product-name">Corduroy Nœud Wristlet</div><div class="product-sub">Quilted Flap · Premium</div><div class="product-price-tag">KSh 1,050</div><span class="product-order">View Details →</span></div></div>
+    <div class="product-card" data-cat="envelope" data-name="La Dentelle Envelope" data-sub="Artisan Fabric · Envelope" data-badge="Handmade" data-price="KSh 650" data-desc="Handmade muslin sanitary pouch with lace scallop trim, floral prints and ribbon bow closure. Flat-fold design. Perfect for everyday carry.">
+      <img class="product-img" src="p1.jpeg" alt="La Dentelle Envelope">
+      <div class="product-info"><span class="product-badge-sm">Handmade</span><div class="product-name-sm">La Dentelle Envelope</div><div class="product-price-sm">KSh 650</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="quilted" data-name="Bonne Grâce Bow Pouch" data-sub="Quilted Flap · Premium" data-badge="Premium" data-price="KSh 950" data-desc="Cream quilted snap-flap pouch with embroidered bow motif. Available in pink and black ribbon prints. A feminine statement piece.">
+      <img class="product-img" src="p2.jpeg" alt="Bonne Grace Bow Pouch">
+      <div class="product-info"><span class="product-badge-sm">Premium</span><div class="product-name-sm">Bonne Grâce Bow Pouch</div><div class="product-price-sm">KSh 950</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="crochet" data-name="Maison Tissée Crossbody" data-sub="Crochet · Artisan" data-badge="Crochet" data-price="KSh 2,800" data-desc="Handwoven rope-cord crossbody bag with silver hardware and handmade plate. Neutral cream and slate tones. A luxury everyday carry.">
+      <img class="product-img" src="p3.jpeg" alt="Maison Tissee Crossbody">
+      <div class="product-info"><span class="product-badge-sm">Crochet</span><div class="product-name-sm">Maison Tissée Crossbody</div><div class="product-price-sm">KSh 2,800</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="fold" data-name="Maison Fleurie Folio" data-sub="Roll-fold · Handmade" data-badge="Handmade" data-price="KSh 850" data-desc="Wide-format roll-open sanitary organiser with lace trim flap and snap bow accent. Holds full pad stacks. Elegant and practical.">
+      <img class="product-img" src="p4.jpeg" alt="Maison Fleurie Folio">
+      <div class="product-info"><span class="product-badge-sm">Handmade</span><div class="product-name-sm">Maison Fleurie Folio</div><div class="product-price-sm">KSh 850</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="envelope" data-name="La Fleur Bleu Sachet" data-sub="Fabric · Envelope" data-badge="Fabric" data-price="KSh 600" data-desc="Blue ditsy-floral cotton envelope pouch with loop tab and button closure. Lightweight and stackable. A charming everyday essential.">
+      <img class="product-img" src="p5.jpeg" alt="La Fleur Bleu Sachet">
+      <div class="product-info"><span class="product-badge-sm">Fabric</span><div class="product-name-sm">La Fleur Bleu Sachet</div><div class="product-price-sm">KSh 600</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="crochet" data-name="Ivoire Crochet Trousse" data-sub="Crochet · Artisan" data-badge="Crochet" data-price="KSh 1,400" data-desc="Chunky ivory crochet zip pouch with floral cotton interior lining. Artisan-finish with a beautiful tactile texture.">
+      <img class="product-img" src="p6.jpeg" alt="Ivoire Crochet Trousse">
+      <div class="product-info"><span class="product-badge-sm">Crochet</span><div class="product-name-sm">Ivoire Crochet Trousse</div><div class="product-price-sm">KSh 1,400</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="zip" data-name="Nylon Luxe Cube" data-sub="Structured Zip · Nylon" data-badge="Nylon" data-price="KSh 700" data-desc="Square zip pouch in printed nylon with bear and flamingo motifs. Structured base, zipper top, fits 6-8 pads.">
+      <img class="product-img" src="p7.jpeg" alt="Nylon Luxe Cube">
+      <div class="product-info"><span class="product-badge-sm">Nylon</span><div class="product-name-sm">Nylon Luxe Cube</div><div class="product-price-sm">KSh 700</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="zip" data-name="Velours Cube Corduroy" data-sub="Structured Zip · Fabric" data-badge="Fabric" data-price="KSh 800" data-desc="Waffle-corduroy mini cube zip bag in pastel prints — dots, florals, strawberries. Structured boxy form.">
+      <img class="product-img" src="p8.jpeg" alt="Velours Cube Corduroy">
+      <div class="product-info"><span class="product-badge-sm">Fabric</span><div class="product-name-sm">Velours Cube Corduroy</div><div class="product-price-sm">KSh 800</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="envelope" data-name="Petal Snap Wallet" data-sub="Fabric · Snap Closure" data-badge="Handmade" data-price="KSh 750" data-desc="Structured fabric wallet-style pouch with snap closure and natural linen inner lining. Floral cotton exterior.">
+      <img class="product-img" src="p9.jpeg" alt="Petal Snap Wallet">
+      <div class="product-info"><span class="product-badge-sm">Handmade</span><div class="product-name-sm">Petal Snap Wallet</div><div class="product-price-sm">KSh 750</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="fold" data-name="Rivière Stretch Folio" data-sub="Roll-fold · Premium" data-badge="Premium" data-price="KSh 900" data-desc="Book-style quilted cotton holder with elastic band closure. Opens flat to reveal dual pockets and red lining.">
+      <img class="product-img" src="p10.jpeg" alt="Riviere Stretch Folio">
+      <div class="product-info"><span class="product-badge-sm">Premium</span><div class="product-name-sm">Rivière Stretch Folio</div><div class="product-price-sm">KSh 900</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="fold" data-name="Maison Fleurie Folio II" data-sub="Roll-fold · Handmade" data-badge="Handmade" data-price="KSh 850" data-desc="Wide-format floral roll-open organiser with lace trim. Soft and lightweight with full pad capacity.">
+      <img class="product-img" src="p11.jpeg" alt="Maison Fleurie Folio II">
+      <div class="product-info"><span class="product-badge-sm">Handmade</span><div class="product-name-sm">Maison Fleurie Folio II</div><div class="product-price-sm">KSh 850</div><span class="product-cta">View Details →</span></div>
+    </div>
+    <div class="product-card" data-cat="quilted" data-name="Corduroy Nœud Wristlet" data-sub="Quilted Flap · Premium" data-badge="Premium" data-price="KSh 1,050" data-desc="Ribbed corduroy wristlet pouch with allover bow print and snap closure. Available in 6 colorways.">
+      <img class="product-img" src="p12.jpeg" alt="Corduroy Noeud Wristlet">
+      <div class="product-info"><span class="product-badge-sm">Premium</span><div class="product-name-sm">Corduroy Nœud Wristlet</div><div class="product-price-sm">KSh 1,050</div><span class="product-cta">View Details →</span></div>
+    </div>
   </div>
 </section>
 <div class="divider"><div class="divider-diamond"></div></div>
@@ -387,16 +402,15 @@ footer{background:var(--charcoal);padding:4rem 3rem 2rem;}
 </div>
 <script>
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
-window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.75rem 3rem':'1.2rem 3rem';});
+window.addEventListener('scroll',()=>{document.getElementById('navbar').style.padding=window.scrollY>60?'0.7rem 3rem':'1.2rem 3rem';});
 const reveals=document.querySelectorAll('.reveal');
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12});
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
 reveals.forEach(el=>observer.observe(el));
 function filterTab(btn,cat){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   document.querySelectorAll('.product-card').forEach(card=>{
-    if(cat==='all'||card.dataset.cat===cat){card.classList.remove('hidden');}
-    else{card.classList.add('hidden');}
+    card.classList.toggle('hidden',cat!=='all'&&card.dataset.cat!==cat);
   });
 }
 const overlay=document.getElementById('modal-overlay');
@@ -407,8 +421,9 @@ document.querySelectorAll('.product-card').forEach(card=>{
     document.getElementById('modal-sub').textContent=card.dataset.sub;
     document.getElementById('modal-price').textContent=card.dataset.price;
     document.getElementById('modal-desc').textContent=card.dataset.desc;
-    document.getElementById('modal-order').href=`https://wa.me/254103572223?text=${encodeURIComponent('Hi EKANI, I would like to order the '+card.dataset.name+' ('+card.dataset.price+')')}`;
-    overlay.classList.add('open');document.body.style.overflow='hidden';
+    document.getElementById('modal-order').href=`https://wa.me/254103572223?text=${encodeURIComponent('Hi EKANI! I would like to order the '+card.dataset.name+' ('+card.dataset.price+'). Please assist.')}`;
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
   });
 });
 function closeModal(){overlay.classList.remove('open');document.body.style.overflow='';}
@@ -419,8 +434,19 @@ const emailInput=document.querySelector('.community-input');
 const joinBtn=document.querySelector('.community-btn');
 joinBtn.addEventListener('click',()=>{
   const email=emailInput.value.trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){emailInput.style.borderColor='#c0392b';emailInput.placeholder='Enter a valid email';emailInput.value='';setTimeout(()=>{emailInput.style.borderColor='';emailInput.placeholder='Your email address';},2500);return;}
-  joinBtn.textContent='✓ You\'re in';joinBtn.style.background='var(--gold)';joinBtn.disabled=true;emailInput.value='';emailInput.placeholder='Welcome to the circle ✦';emailInput.disabled=true;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    emailInput.style.borderColor='#c0392b';
+    emailInput.placeholder='Enter a valid email';
+    emailInput.value='';
+    setTimeout(()=>{emailInput.style.borderColor='';emailInput.placeholder='Your email address';},2500);
+    return;
+  }
+  joinBtn.textContent='✓ You\'re in';
+  joinBtn.style.background='var(--gold)';
+  joinBtn.disabled=true;
+  emailInput.value='';
+  emailInput.placeholder='Welcome to the circle ✦';
+  emailInput.disabled=true;
 });
 </script>
 </body>
